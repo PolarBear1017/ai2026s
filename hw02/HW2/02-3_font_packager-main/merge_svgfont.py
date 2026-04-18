@@ -7,21 +7,45 @@ from tqdm import tqdm
 
 FONT_NAME = "MyFont"
 CANVAS_SIZE = 300
-GLYPH_SCALE = 1.40
-GLYPH_PADDING = 6
+TARGET_GLYPH_SIZE = 240
+MAX_GLYPH_SCALE = 2.20
+GLYPH_PADDING = 8
 
 
-def transform_point(x, y):
+def transform_point(x, y, scale):
     center = CANVAS_SIZE / 2
-    scaled_x = center + (x - center) * GLYPH_SCALE
+    scaled_x = center + (x - center) * scale
     flipped_y = CANVAS_SIZE - y
-    scaled_y = center + (flipped_y - center) * GLYPH_SCALE
+    scaled_y = center + (flipped_y - center) * scale
     return scaled_x, scaled_y
 
 
 def transform_path(raw_d):
     tokens = re.findall(r"([a-zA-Z])|([-+]?\d*\.\d+|[-+]?\d+)", raw_d)
     entries = []
+    pending_x = None
+    raw_points = []
+
+    for cmd, val in tokens:
+        if cmd:
+            pending_x = None
+            continue
+
+        num = float(val)
+        if pending_x is None:
+            pending_x = num
+        else:
+            raw_points.append((pending_x, CANVAS_SIZE - num))
+            pending_x = None
+
+    if raw_points:
+        xs = [x for x, _ in raw_points]
+        ys = [y for _, y in raw_points]
+        max_dim = max(max(xs) - min(xs), max(ys) - min(ys))
+        scale = min(MAX_GLYPH_SCALE, TARGET_GLYPH_SIZE / max_dim) if max_dim else 1
+    else:
+        scale = 1
+
     pending_x = None
 
     for cmd, val in tokens:
@@ -34,7 +58,7 @@ def transform_path(raw_d):
         if pending_x is None:
             pending_x = num
         else:
-            x, y = transform_point(pending_x, num)
+            x, y = transform_point(pending_x, num, scale)
             entries.append(("x", x))
             entries.append(("y", y))
             pending_x = None
