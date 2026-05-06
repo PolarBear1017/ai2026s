@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>D3.js scatter plot with hover</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        #tooltip {
+            position: absolute;
+            text-align: center;
+            width: 12vw;       
+            min-width: 120px;  
+            max-width: 250px;   
+            height: auto;      
+            padding: 8px;
+            font: 12px sans-serif;
+            background: white;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        svg {
+            display: block;
+        }
+
+        .axis-label {
+            fill: #000;
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        // 設定 SVG 大小
+        var margin = {top: 10, right: 30, bottom: 30, left: 60},
+            width = 1080 - margin.left - margin.right,
+            height = 720 - margin.top - margin.bottom;
+
+        // 加入 svg 到 body
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
+        var tooltip = d3.select("body").append("div")
+            .attr("id", "tooltip")
+            .style("opacity", 0);
+
+        // 設定為自己字的檔名
+        var myImg = "113590028.png";
+        
+        d3.csv("results.csv").then(function(data) {
+
+            // 設定x軸比例尺
+            var x = d3.scaleLinear()
+                .domain([0.3, 1]) // ssim
+                .range([ 0, width ]);
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+            // 加入x軸標籤
+            .append("text")
+                .attr("class", "axis-label")
+                .attr("x", width) // 將標籤放置在軸的末端
+                .attr("y", -20) // 在X軸線下方一點的位置
+                .style("text-anchor", "end") // 文本對齊方式
+                .text("SSIM");
+
+            // 設定y軸比例尺
+            var y = d3.scaleLinear()
+                .domain([0, 0.7]) // lpips
+                .range([ height, 0]);
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            // 加入Y軸以及標籤
+            svg.append("g")
+                .call(d3.axisLeft(y))
+            // 加入y軸標籤
+            .append("text")
+                .attr("class", "axis-label")
+                .attr("transform", "rotate(-90)") // 旋轉標籤
+                .attr("y", 30) // 在Y軸線左方一點的位置
+                .attr("dy", ".71em") // 微調位置
+                .style("text-anchor", "end") // 文本對齊方式
+                .text("LPIPS");
+
+            var filteredData = data.filter(function(d) {
+                return d.SSIM >= 0 && d.SSIM <=1 && d.LPIPS >=0 && d.LPIPS <= 1;
+            });
+
+            var node = svg.append('g')
+                .selectAll("g.node")
+                .data(filteredData)
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function(d) { return "translate(" + x(d.SSIM) + "," + y(d.LPIPS) + ")"; })
+                .style("cursor", "pointer");
+
+            // 畫圓 (將半徑 r 縮小到 14)
+            node.append("circle")
+                .attr("r", 14) 
+                .style("fill", function(d) {
+                    return d.Student === myImg ? "#ff0000" : "#187C19"; 
+                })
+                .style("stroke", "white")
+                .style("stroke-width", "1.5px");
+
+            // 加入圖片
+            node.append("image")
+                .attr("xlink:href", function(d) { 
+                    return "img/" + d.Student; // 讀取圖片路徑
+                }) 
+                .attr("x", -10) // 往左平移一半寬度以置中
+                .attr("y", -10) // 往上平移一半高度以置中
+                .attr("width", 20) // 圖片寬度
+                .attr("height", 20) // 圖片高度
+                .style("pointer-events", "none"); // 確保滑鼠事件由群組接管
+
+            // Tooltip 綁定到整個 node 群組上
+            node.on("mouseover", function(d) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    
+                    tooltip.html(
+                        "<div style='margin-bottom:5px; font-weight:bold; font-size: 1.1em;'>" + d.Student + "</div>" +
+                        "<img src='img/" + d.Student + "' alt='Handwriting' style='width: 100%; height: auto; border: 1px solid #ccc;'>"
+                    )
+                    var tooltipNode = document.getElementById("tooltip");
+                    var tooltipWidth = tooltipNode.offsetWidth;
+                    var tooltipHeight = tooltipNode.offsetHeight;
+
+                    tooltip
+                        .style("left", (d3.event.pageX - tooltipWidth - 15) + "px") // 往左位移
+                        .style("top", (d3.event.pageY - tooltipHeight - 15) + "px"); // 往上位移
+                })
+                .on("mouseout", function(d) {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+            
+        });
+
+    </script>
+</body>
+</html>
