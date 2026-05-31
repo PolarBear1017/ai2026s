@@ -2,3 +2,20 @@
 **/.DS_Store
 .vscode/
 hw02/HW2/final_font/fontpico.svg
+
+# Ignore large handwriting training/generation image & vector directories
+hw02/HW2/02-2_glyph_vector/png/
+hw02/HW2/02-2_glyph_vector/svg/
+hw02/HW2/02-2_glyph_vector/pico/
+hw02/HW2/02-2_glyph_vector/output/
+hw02/HW2/02-3_font_packager-main/pico/
+
+hw03/HW3/generated_font/png/
+hw03/HW3/generated_font/svg/
+hw03/HW3/generated_font/svg_pico/
+hw03/HW3/FontDiffuser_sample（推論）/fontdiffuser_assets/png_norm/
+hw03/HW3/FontDiffuser_sample（推論）/fontdiffuser_assets/train/
+
+# Ignore temporary backup folders while renaming
+*_bak/
+**/*_bak/

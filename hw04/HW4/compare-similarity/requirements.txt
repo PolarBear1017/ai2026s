@@ -1,9 +1,0 @@
-pandas
-seaborn
-numpy
-matplotlib
-Pillow
-scikit-image
-lpips
-torch
-opencv-python
