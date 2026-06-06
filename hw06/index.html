@@ -126,6 +126,14 @@
   .bottomrow {
     margin-bottom: 36px;
   }
+
+  .prompt {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
 </style>
 </head>
 <body>
@@ -153,7 +161,13 @@
   <!-- ------------------------------------------------>
   <div class="row hw12">
     <div class="col-md-12 twenty">
-      心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。
+      這次是生成式人工智慧這門課最後一個作業了，我覺得我們這次作業的主題很有趣，要做的是「文生動畫」。
+
+      我們使用的工具是跟上次文生圖一樣的 ComfyUI，透過工作流（workflow）的模組化樣板，並以節點式的方式連接各個模塊、建構 workflow 來生成影片。
+
+      生成出的影片大概都有 120 幀左右，也就是說是由超過 120 張照片組合而成的影片。我覺得這次的作業蠻有趣也很實用，希望未來能玩到更多 AI 生影片的各種工具。
+
+      這次作業也花了不少時間，最後有成功生成出影片，讓我很有成就感。
     </div>
   </div>
 
@@ -169,22 +183,22 @@
         </tr>
         <tr>
           <td rowspan="4" id="myTotal"></td>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox1"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox1" checked></td>
           <td id='m1'>4</td>
-          <td>Simple baseline - 描述</td>
+          <td>Simple baseline - Comfy UI 環境設定完成</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox2"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox2" checked></td>
           <td id='m2'>4</td>
-          <td>Medium baseline - 描述</td>
+          <td>Medium baseline - 生成角色的圖片</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox3"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox3" checked></td>
           <td id='m3'>2</td>
-          <td>Strong baseline - 描述</td>
+          <td>Strong baseline - 生成完整角色動畫</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox4" checked></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox4"></td>
           <td id='m4'>-10</td>
           <td>沒有寫100字心得</td>
         </tr>
@@ -195,13 +209,93 @@
 
   <!-- ------------------------------------------------>
   <div class="row hw12 bottomrow">
-    <div class="col-md-12 twenty">
-      <video id="video1" style="width:100%;max-width:100%;" controls="">
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-      </video>
+    <div class="col-md-12 twenty" style="background-color:#00AC48;">
+      <figcaption>Comfy UI 環境設定完成</figcaption>
+      <a href="https://civitai.com/models/61643?modelVersionId=67841">CheckPoint: based66_v30</a><br>
+      <a href="https://civitai.com/models/69977/chibi-laugh">LoRA:  chibi-laugh</a><br>  
+      <img src="ComfyUI.png"  width="100%"><br>
+    </div>
+  </div>
+  
+  <div class="row hw12 bottomrow">
+    <div class="col-md-4 twenty" style="background-color:#ff0000;">
+      <figcaption>生成角色的圖片 - 1</figcaption>
+      <img src="text_to_video_1.png"  width="100%"><br>
+    </div>
+    <div class="col-md-4 twenty" style="background-color:#ff0000;">
+      <figcaption>生成角色的圖片 - 2</figcaption>
+      <img src="text_to_video_2.png"  width="100%"><br>
+    </div>
+    <div class="col-md-4 twenty" style="background-color:#ff0000;">
+      <figcaption>生成角色的圖片 - 3</figcaption>
+      <img src="text_to_video_3.png"  width="100%"><br>
     </div>
   </div>
 
+  
+  <div class="row hw12 bottomrow">
+    <div class="col-md-4 twenty" style="background-color:#7030a0;">
+      <figcaption>生成完整角色動畫 - 1</figcaption>
+      <img src="text_to_video_1.gif" width="100%"><br>
+      <pre class="prompt">使用提示詞:
+"0" :"spring day, floral skirt, wind, hair accessories, smile, pink flowers, pink leaves, in spring forest",
+"10" :"spring day, floral skirt, wind, hair accessories, smile, pink flowers, pink leaves, in spring forest",
+"20" :"spring day, floral skirt, wind, hair accessories, smile, pink flowers, pink leaves, in spring forest",
+"30" :"summer day, short-sleeved dress, straw hat, green leaves, in summer forest",
+"40" :"summer day, short-sleeved dress, straw hat, green leaves, in summer forest",
+"50" :"summer day, short-sleeved dress, straw hat, green leaves, in summer forest",
+"60" :"fall day, sweater, slim jeans, wind, fallen leaves, orange maple leaves, in fall forest",
+"70" :"fall day, sweater, slim jeans, wind, fallen leaves, orange maple leaves, in fall forest",
+"80" :"fall day, sweater, slim jeans, wind, fallen leaves, orange maple leaves, in fall forest",
+"90" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, white snow-covered leaves, in winter forest",
+"100" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, white snow-covered leaves, in winter forest",
+"110" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, white snow-covered leaves, in winter forest"
+
+使用負面提示詞:
+(bad quality, worst quality:1.2)</pre>
+    </div>
+    <div class="col-md-4 twenty" style="background-color:#7030a0;">
+      <figcaption>生成完整角色動畫 - 2</figcaption>
+      <img src="text_to_video_2.gif" width="100%"><br>
+      <pre class="prompt">使用提示詞:
+"0" :"spring day, floral skirt, wind, hair accessories, smile, pink flowers, pink leaves, in spring forest",
+"10" :"spring day, floral skirt, wind, hair accessories, smile, pink flowers, pink leaves, in spring forest",
+"20" :"spring day, floral skirt, wind, hair accessories, smile, pink flowers, pink leaves, in spring forest",
+"30" :"summer day, short-sleeved dress, straw hat, green leaves, in summer forest",
+"40" :"summer day, short-sleeved dress, straw hat, green leaves, in summer forest",
+"50" :"summer day, short-sleeved dress, straw hat, green leaves, in summer forest",
+"60" :"fall day, sweater, slim jeans, wind, fallen leaves, orange maple leaves, in fall forest",
+"70" :"fall day, sweater, slim jeans, wind, fallen leaves, orange maple leaves, in fall forest",
+"80" :"fall day, sweater, slim jeans, wind, fallen leaves, orange maple leaves, in fall forest",
+"90" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, white snow-covered leaves, in winter forest",
+"100" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, white snow-covered leaves, in winter forest",
+"110" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, white snow-covered leaves, in winter forest"
+
+使用負面提示詞:
+(bad quality, worst quality:1.2)</pre>
+    </div>
+    <div class="col-md-4 twenty" style="background-color:#7030a0;">
+      <figcaption>生成完整角色動畫 - 3</figcaption>
+      <img src="text_to_video_3.gif" width="100%"><br>
+      <pre class="prompt">使用提示詞:
+"0" :"spring day, floral skirt, wind, hair accessories, smile, in forest",
+"10" :"spring day, floral skirt, wind, hair accessories, smile, in forest",
+"20" :"spring day, floral skirt, wind, hair accessories, smile, in forest",
+"30" :"summer day, short-sleeved dress, straw hat, in forest",
+"40" :"summer day, short-sleeved dress, straw hat, in forest",
+"50" :"summer day, short-sleeved dress, straw hat, in forest",
+"60" :"fall day, sweater, slim jeans, wind, fallen leaves, in forest",
+"70" :"fall day, sweater, slim jeans, wind, fallen leaves, in forest",
+"80" :"fall day, sweater, slim jeans, wind, fallen leaves, in forest",
+"90" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, in forest",
+"100" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, in forest",
+"110" :"winter, down jacket, woolen hat, ear protection gloves, snowflakes, in forest"
+
+使用負面提示詞:
+(bad quality, worst quality:1.2)</pre>
+    </div>
+  </div>
+  <!-- ------------------------------------------------>
   <!-- ------------------------------------------------>
 
   <!-- ------------------------------------------------>
@@ -252,4 +346,3 @@
 
 </body>
 </html>
-

@@ -15,3 +15,7 @@ hw03/HW3/generated_font/svg/
 hw03/HW3/generated_font/svg_pico/
 hw03/HW3/FontDiffuser_sample（推論）/fontdiffuser_assets/png_norm/
 hw03/HW3/FontDiffuser_sample（推論）/fontdiffuser_assets/train/
+
+# Ignore HW6 generated video outputs
+hw06/HW6/success_video/
+hw06/HW6/unsuccess_video/
